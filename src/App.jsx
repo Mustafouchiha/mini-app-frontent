@@ -98,8 +98,8 @@ export default function App() {
 
   const handleLogin = async (userData) => {
     setUser(userData);
+    setNav("home"); // blank ekranni oldini olish uchun nav ni oldin o'zgartir
     await loadData();
-    setNav("home");
   };
 
   const handleLogout = async () => {

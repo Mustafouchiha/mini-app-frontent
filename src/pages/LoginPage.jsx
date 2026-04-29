@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { BtnPrimary, Lbl, TInput } from "../components/UI";
 import { C } from "../constants";
 import { authAPI, setToken } from "../services/api";
@@ -239,8 +239,13 @@ export default function LoginPage({ onLogin }) {
 
           {error && <ErrorBox msg={error} />}
 
-          <BtnPrimary onClick={handleNextStep} fullWidth>
-            <Smartphone size={15} /> Kod yuborish →
+          <BtnPrimary onClick={loading ? undefined : handleNextStep} fullWidth disabled={loading}>
+            {loading
+              ? <><Loader2 size={15} className="spin" /> Yuborilmoqda...</>
+              : mode === "login"
+                ? <><Smartphone size={15} /> Kod yuborish →</>
+                : <><CheckCircle size={15} /> Davom etish →</>
+            }
           </BtnPrimary>
 
           {/* Ajratuvchi */}
