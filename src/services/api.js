@@ -87,6 +87,16 @@ export const operatorAPI = {
       headers: headers(),
       body: JSON.stringify({ is_active }),
     }).then(handle),
+
+  setUserOperator: (id, is_operator) =>
+    apiFetch(`${BASE}/operator/users/${id}/set-operator`, {
+      method: "PUT",
+      headers: headers(),
+      body: JSON.stringify({ is_operator }),
+    }).then(handle),
+
+  checkMainAdmin: () =>
+    apiFetch(`${BASE}/operator/me/is-main-admin`, { headers: headers() }).then(handle),
 };
 
 // ─── PRODUCTS ─────────────────────────────────────────────────────
