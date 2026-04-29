@@ -89,7 +89,7 @@ export default function OperatorPage({ onBack }) {
   const [query,      setQuery]     = useState("");
   const [users,      setUsers]     = useState([]);
   const [products,   setProducts]  = useState([]);
-  const [loading,    setLoading]   = useState(false);
+  const [loading,    setLoading]   = useState(true);
   const [actionLoading, setActionLoading] = useState(false);
   const [confirm,    setConfirm]   = useState(null); // { type, id, name }
   const [deposit,    setDeposit]   = useState(null); // { phone, name, mode: 'add'|'withdraw' }
