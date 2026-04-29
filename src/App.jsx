@@ -5,7 +5,7 @@ import ProfilePage from "./pages/ProfilePage";
 import PaymentPage from "./pages/PaymentPage";
 import OperatorPage from "./pages/OperatorPage";
 import { C } from "./constants";
-import { getToken, clearAuth, offersAPI, authAPI, requrilishAPI } from "./services/api";
+import { getToken, setToken, clearAuth, offersAPI, authAPI, requrilishAPI } from "./services/api";
 import { Home, Plus, Loader2 } from "lucide-react";
 
 const OPERATOR_PHONES = ["331350206"];
@@ -24,15 +24,9 @@ const savedUser = () => {
 
 const LOADING_GIF = "https://media.tenor.com/5oM9f0mU7s8AAAAd/construction-loader.gif";
 
-function hasTgParams() {
-  const p = new URLSearchParams(window.location.search);
-  // register=1 bo'lsa ham mehmon rejimda postlarni ko'rish mumkin bo'lsin.
-  return p.has("tgToken");
-}
-
 export default function App() {
   const [user,       setUser]       = useState(savedUser);
-  const [nav,        setNav]        = useState(hasTgParams() ? "login" : "home");
+  const [nav,        setNav]        = useState("home");
   const [products,   setProducts]   = useState([]);
   const [myProducts, setMyProducts] = useState([]);
   const [offers,     setOffers]     = useState([]);
@@ -46,10 +40,26 @@ export default function App() {
 
   // ── On mount: verify token + load data ──────────────────────────
   useEffect(() => {
-    // Har doim Home uchun mahsulotlarni yuklaymiz (guest ham ko'rsin)
     (async () => {
       try {
-        if (getToken()) {
+        // tgToken URL parametri bo'lsa — LoginPage o'zi hal qiladi
+        const params = new URLSearchParams(window.location.search);
+        const tgToken = params.get("tgToken");
+
+        if (tgToken) {
+          // tgToken bilan avtomatik kirish
+          try {
+            const data = await authAPI.loginWithTgToken(tgToken);
+            setToken(data.token);
+            localStorage.setItem("rm_user", JSON.stringify(data.user));
+            setUser(data.user);
+            window.history.replaceState({}, "", window.location.pathname);
+          } catch {
+            // Token eskirgan — oddiy login sahifasiga o'tadi
+            window.history.replaceState({}, "", window.location.pathname);
+          }
+        } else if (getToken()) {
+          // Saqlangan token bilan kirish
           const me = await authAPI.me();
           setUser(me);
           localStorage.setItem("rm_user", JSON.stringify(me));

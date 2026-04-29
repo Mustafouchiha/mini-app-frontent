@@ -109,8 +109,19 @@ export default function LoginPage({ onLogin }) {
         await authAPI.sendCode(phone.replace(/\s/g, ""));
         setStep(2);
       } catch (e) {
-        if (e.message?.includes("needBot") || e.message?.includes("botda")) {
-          setError("Bu raqam botda ro'yxatdan o'tmagan. @Requrilishbot da /start bosing.");
+        if (e.message?.includes("needBot") || e.message?.includes("botda") || e.message?.includes("ro'yxatdan o'tmagan")) {
+          setError(
+            "Bu raqam @Requrilishbot ga ulanmagan.\n\n" +
+            "1️⃣ @Requrilishbot ga o'ting\n" +
+            "2️⃣ /start bosing\n" +
+            "3️⃣ Telefon raqamingizni yuboring\n" +
+            "4️⃣ Qayta urining"
+          );
+        } else if (e.message?.includes("xatolik") || e.message?.includes("yuborishda")) {
+          setError(
+            "Telegram xabar yuborilmadi.\n\n" +
+            "@Requrilishbot ga /start yuboring va qayta urining."
+          );
         } else {
           setError(e.message || "Xatolik yuz berdi");
         }
