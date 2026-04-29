@@ -276,7 +276,7 @@ export default function App() {
         </>
       )}
 
-      {loggedIn && (nav === "home" || (nav !== "profile")) && (
+      {loggedIn && nav === "home" && (
         <>
           <HomePage
             user={user}
