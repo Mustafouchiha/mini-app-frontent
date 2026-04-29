@@ -1,17 +1,5 @@
-// ReMarket SVG logotipi — sayt ranglariga moslashtirilgan
-// 3 ta o'q 120° aylantirilgan qayta ishlash belgisi
+// ReQurilish R-Logo — texnik chizma uslubida
 export default function Logo({ size = 48 }) {
-  // Har bir o'q: to'rtburchak tanasi + uchburchak boshi
-  // Barcha 3 ta o'q bir xil, lekin 120° va 240° aylantiriladi
-  const Arrow = ({ rotate, grad }) => (
-    <g transform={`rotate(${rotate} 50 50)`}>
-      {/* Tana */}
-      <rect x="43" y="16" width="14" height="28" rx="2" fill={`url(#${grad})`} />
-      {/* Bosh (nakonechnik) */}
-      <polygon points="35,44 50,58 65,44" fill={`url(#${grad})`} />
-    </g>
-  );
-
   return (
     <svg
       width={size}
@@ -20,24 +8,59 @@ export default function Logo({ size = 48 }) {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <defs>
-        <linearGradient id="rmA" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="#FFD0A8" />
-          <stop offset="100%" stopColor="#F4894A" />
-        </linearGradient>
-        <linearGradient id="rmB" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="#F4894A" />
-          <stop offset="100%" stopColor="#D96020" />
-        </linearGradient>
-        <linearGradient id="rmC" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="#FFB380" />
-          <stop offset="100%" stopColor="#F4894A" />
-        </linearGradient>
-      </defs>
+      {/* Chap — diagonal chiziqli to'rtburchaklar */}
+      <rect x="6" y="30" width="10" height="52" fill="#F4894A" opacity="0.15" stroke="#F4894A" strokeWidth="1"/>
+      <rect x="20" y="22" width="10" height="60" fill="#F4894A" opacity="0.15" stroke="#F4894A" strokeWidth="1"/>
 
-      <Arrow rotate={0}   grad="rmA" />
-      <Arrow rotate={120} grad="rmB" />
-      <Arrow rotate={240} grad="rmC" />
+      {/* Diagonal hatching — birinchi to'rtburchak */}
+      <clipPath id="cl1"><rect x="6" y="30" width="10" height="52"/></clipPath>
+      <g clipPath="url(#cl1)" stroke="#F4894A" strokeWidth="0.8" opacity="0.9">
+        {[-10,-5,0,5,10,15,20,25,30,35,40,45,50,55,60].map((d,i)=>(
+          <line key={i} x1={6+d} y1="30" x2={6+d-20} y2="82"/>
+        ))}
+      </g>
+
+      {/* Diagonal hatching — ikkinchi to'rtburchak */}
+      <clipPath id="cl2"><rect x="20" y="22" width="10" height="60"/></clipPath>
+      <g clipPath="url(#cl2)" stroke="#F4894A" strokeWidth="0.8" opacity="0.9">
+        {[-10,-5,0,5,10,15,20,25,30,35,40,45,50,55,60,65].map((d,i)=>(
+          <line key={i} x1={20+d} y1="22" x2={20+d-20} y2="82"/>
+        ))}
+      </g>
+
+      {/* O'ng — R shaklidagi aylana o'q (3 ta o'q) */}
+      {/* Yuqori o'q */}
+      <polygon
+        points="38,12 72,12 82,22 72,22 72,18 42,18 42,42 52,42 52,48 36,48 36,18 38,18"
+        fill="none" stroke="#F4894A" strokeWidth="1.5" strokeLinejoin="round"
+      />
+      {/* O'ng yuqori — o'q boshi */}
+      <polygon
+        points="72,12 88,28 82,28 82,22"
+        fill="#F4894A" opacity="0.3" stroke="#F4894A" strokeWidth="1.2"
+      />
+
+      {/* O'ng pastki o'q */}
+      <polygon
+        points="52,48 84,48 84,72 78,72 78,54 52,54"
+        fill="none" stroke="#F4894A" strokeWidth="1.5" strokeLinejoin="round"
+      />
+      {/* O'ng pastki — o'q boshi */}
+      <polygon
+        points="84,72 68,88 68,82 78,72"
+        fill="#F4894A" opacity="0.3" stroke="#F4894A" strokeWidth="1.2"
+      />
+
+      {/* Pastki chapga o'q */}
+      <polygon
+        points="36,48 42,48 42,82 62,82 62,88 36,88"
+        fill="none" stroke="#F4894A" strokeWidth="1.5" strokeLinejoin="round"
+      />
+      {/* Pastki chapga — o'q boshi */}
+      <polygon
+        points="36,88 20,72 26,72 36,82"
+        fill="#F4894A" opacity="0.3" stroke="#F4894A" strokeWidth="1.2"
+      />
     </svg>
   );
 }
