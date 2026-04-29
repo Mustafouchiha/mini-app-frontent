@@ -155,7 +155,7 @@ export default function OperatorPage({ onBack }) {
 
   // Query o'zgarganda — debounce, spinner yo'q
   useEffect(() => {
-    if (!query && query !== "") return;
+    if (query === "") return;
     const t = setTimeout(() => load(query, false), 400);
     return () => clearTimeout(t);
   }, [query, load]);

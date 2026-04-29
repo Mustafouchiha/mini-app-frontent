@@ -110,7 +110,7 @@ export default function App() {
     setNav("home");
     // Guest uchun public mahsulotlarni qayta yuklash
     try {
-      const prods = await productsAPI.getAll();
+      const prods = await requrilishAPI.getPosts();
       setProducts(prods);
     } catch { /* silent */ }
   };
